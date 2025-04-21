@@ -520,6 +520,7 @@ main {
     gap: 20px;
 }
 
+/* Enhanced Game Item Layout */
 .game-item {
     display: flex;
     align-items: center;
@@ -528,6 +529,7 @@ main {
     padding: 15px;
     transition: all 0.3s ease;
     border: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
 }
 
 .game-item:hover {
@@ -549,8 +551,10 @@ main {
     font-size: 24px;
 }
 
+/* Updated game info to prevent text from touching the button */
 .game-info {
     flex: 1;
+    padding-right: 60px; /* Creates space for the button */
 }
 
 .game-info h4 {
@@ -581,21 +585,60 @@ main {
     font-weight: 500;
 }
 
+/* Improved Game Button with Icon */
 .game-btn {
-    display: inline-block;
-    padding: 6px 15px;
-    background-color: var(--primary);
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    background: rgba(227, 6, 20, 0.2);
+    border: none;
     color: white;
+    height: 40px;
     border-radius: 20px;
-    font-size: 0.8rem;
-    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
     transition: all 0.3s ease;
+    overflow: hidden;
+    padding: 0 15px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.game-btn::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--primary);
+    border-radius: 20px;
+    z-index: -1;
+    transform: scale(0);
+    transition: transform 0.4s cubic-bezier(0.5, 1.6, 0.4, 0.7);
+}
+
+.game-btn:hover::before {
+    transform: scale(1);
 }
 
 .game-btn:hover {
-    background-color: var(--primary-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(227, 6, 20, 0.3);
+    transform: translateY(-50%) scale(1.05);
+    color: var(--white);
+}
+
+/* Add icon to game button */
+.game-btn::after {
+    content: '\f35d'; /* Font Awesome external link icon */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 0.9rem;
+}
+
+.game-btn i {
+    font-size: 1.2rem;
 }
 
 /* Documentation Section */
@@ -709,7 +752,7 @@ main {
     font-family: monospace;
 }
 
-/* Game Search Container */
+/* Game Search Container - removed ripple effect */
 .game-search-container {
     margin-bottom: 20px;
 }
@@ -720,7 +763,7 @@ main {
     margin-bottom: 10px;
 }
 
-/* Updated search toggle button to match copy button animation */
+/* Updated search toggle button to match copy button animation without ripple */
 .search-toggle-btn {
     background-color: rgba(227, 6, 20, 0.2);
     border: none;
@@ -774,11 +817,6 @@ main {
 .mode-change #search-mode {
     color: var(--primary);
     animation: pulseText 1s ease;
-}
-
-/* Ripple effect for the button - modified to match copy button */
-.search-toggle-btn.ripple::before {
-    animation: rippleEffect 0.6s ease-out;
 }
 
 /* Adjust search input to accommodate the toggle button */
@@ -893,6 +931,32 @@ footer p {
     .section h2 {
         font-size: 2rem;
     }
+
+    .game-info {
+        padding-right: 0; /* Remove padding on mobile */
+    }
+    
+    .game-btn {
+        position: static;
+        transform: none;
+        margin-top: 10px;
+        align-self: flex-start;
+        height: 36px;
+        padding: 0 12px;
+    }
+    
+    .game-btn:hover {
+        transform: scale(1.05);
+    }
+    
+    .game-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .game-icon {
+        margin-bottom: 15px;
+    }
 }
 
 @media (max-width: 576px) {
@@ -921,17 +985,6 @@ footer p {
     }
     50% {
         transform: scale(1.05);
-    }
-}
-
-@keyframes rippleEffect {
-    0% {
-        transform: scale(0);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(2);
-        opacity: 0;
     }
 }
 
